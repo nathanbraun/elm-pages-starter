@@ -1,5 +1,6 @@
 module Page.SPLAT__ exposing (Data, Model, Msg, page)
 
+import Browser.Navigation
 import Content exposing (ContentMetadata)
 import DataSource exposing (DataSource)
 import Head
@@ -8,6 +9,7 @@ import Html.Styled as Html exposing (Html)
 import Page exposing (Page, PageWithState, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
+import Path
 import Shared
 import View exposing (View)
 
@@ -16,22 +18,59 @@ type alias Model =
     ()
 
 
-type alias Msg =
-    Never
+type Msg
+    = NoOp
 
 
 type alias RouteParams =
     { splat : List String }
 
 
-page : Page RouteParams Data
+page : PageWithState RouteParams Data Model Msg
 page =
     Page.prerender
         { head = head
         , routes = routes
         , data = data
         }
-        |> Page.buildNoState { view = view }
+        |> Page.buildWithSharedState
+            { view = view
+            , init = init
+            , update = update
+            , subscriptions = subscriptions
+            }
+
+
+init :
+    Maybe PageUrl
+    -> Shared.Model
+    -> StaticPayload Data RouteParams
+    -> ( Model, Cmd Msg )
+init _ _ _ =
+    ( (), Cmd.none )
+
+
+subscriptions :
+    Maybe PageUrl
+    -> routeParams
+    -> Path.Path
+    -> Model
+    -> Shared.Model
+    -> Sub Msg
+subscriptions _ _ _ _ _ =
+    Sub.none
+
+
+update :
+    PageUrl
+    -> Maybe Browser.Navigation.Key
+    -> Shared.Model
+    -> StaticPayload Data RouteParams
+    -> Msg
+    -> Model
+    -> ( Model, Cmd Msg, Maybe Shared.Msg )
+update _ _ _ _ msg model =
+    ( model, Cmd.none, Nothing )
 
 
 routes : DataSource (List RouteParams)
@@ -81,9 +120,10 @@ type alias Data =
 view :
     Maybe PageUrl
     -> Shared.Model
+    -> Model
     -> StaticPayload Data RouteParams
     -> View Msg
-view _ sharedModel static =
+view _ sharedModel model static =
     { title = static.data.metadata.title
     , body = static.data.body sharedModel
     }
