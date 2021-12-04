@@ -14,6 +14,9 @@ Now no webpack required.
 ## Tailwind
 With matteus23/elm-tailwind-modules
 
+## Model in Rendelabel r
+<button label="Click Me!"/>
+
 ## SLAT routes
 Set up so that it matches anything (including nested pages) in content folder
 

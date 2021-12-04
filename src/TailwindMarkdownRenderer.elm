@@ -68,6 +68,23 @@ engine =
                             children
                         )
                 )
+            , Markdown.Html.tag "button"
+                (\label _ _ ->
+                    button
+                        [ css
+                            [ Tw.max_w_xs
+                            , Tw.px_5
+                            , Tw.py_3
+                            , Tw.text_base
+                            , Tw.font_medium
+                            , Tw.rounded_md
+                            , Tw.text_white
+                            , Tw.bg_blue_500
+                            ]
+                        ]
+                        [ text label ]
+                )
+                |> Markdown.Html.withAttribute "label"
             , Markdown.Html.tag "image"
                 (\src desc _ _ ->
                     img
