@@ -55,6 +55,7 @@ type alias Data =
 
 type SharedMsg
     = RandomVersions (List Test) (List Version)
+    | LogConsole
 
 
 type alias Model =
@@ -123,6 +124,13 @@ update msg model =
             ( { model | showMobileMenu = False }
             , newPage.path |> Path.toAbsolute |> Analytics.trackPageNavigation
             )
+
+        SharedMsg LogConsole ->
+            let
+                _ =
+                    Debug.log "printing from " "shared"
+            in
+            ( model, Cmd.none )
 
         SharedMsg (RandomVersions stored versions) ->
             let

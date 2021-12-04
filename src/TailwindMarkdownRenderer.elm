@@ -4,17 +4,19 @@ import Css
 import DataSource exposing (DataSource)
 import Html.Styled as Html exposing (..)
 import Html.Styled.Attributes as Attr exposing (css)
+import Html.Styled.Events exposing (onClick)
 import List.Extra as Extra
 import Markdown.Block as Block exposing (Block)
 import Markdown.Html
 import Markdown.Renderer
 import Shared exposing (Model, TestId(..), Version(..))
+import SplatTypes exposing (Msg(..))
 import SyntaxHighlight
 import Tailwind.Breakpoints as Bp
 import Tailwind.Utilities as Tw
 
 
-render : List Block -> DataSource (Shared.Model -> List (Html msg))
+render : List Block -> DataSource (Shared.Model -> List (Html Msg))
 render blocks =
     blocks
         |> Markdown.Renderer.render engine
@@ -26,7 +28,7 @@ render blocks =
         |> DataSource.fromResult
 
 
-engine : Markdown.Renderer.Renderer (Model -> Html.Html msg)
+engine : Markdown.Renderer.Renderer (Model -> Html.Html Msg)
 engine =
     { heading = heading
     , paragraph =
@@ -81,6 +83,7 @@ engine =
                             , Tw.text_white
                             , Tw.bg_blue_500
                             ]
+                        , onClick ClickButton
                         ]
                         [ text label ]
                 )

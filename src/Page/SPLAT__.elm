@@ -15,17 +15,23 @@ import Page exposing (Page, PageWithState, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Path
-import Shared
+import Shared exposing (Msg(..), SharedMsg(..))
+import SplatTypes exposing (Msg(..))
 import TailwindMarkdownRenderer
 import View exposing (View)
+
+
+type alias Msg =
+    SplatTypes.Msg
 
 
 type alias Model =
     ()
 
 
-type Msg
-    = NoOp
+
+-- type Msg
+--     = NoOp
 
 
 type alias RouteParams =
@@ -77,8 +83,8 @@ update :
     -> ( Model, Cmd Msg, Maybe Shared.Msg )
 update _ _ _ _ msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none, Nothing )
+        ClickButton ->
+            ( model, Cmd.none, Just (SharedMsg LogConsole) )
 
 
 routes : DataSource (List RouteParams)
@@ -143,7 +149,7 @@ pageBody :
         (ContentMetadata
          ->
             (Shared.Model
-             -> List (Html msg)
+             -> List (Html Msg)
             )
          -> value
         )
@@ -159,9 +165,9 @@ pageBody splat constructor =
 
 
 withFrontmatter :
-    (frontmatter -> (Shared.Model -> List (Html msg)) -> value)
+    (frontmatter -> (Shared.Model -> List (Html Msg)) -> value)
     -> Decoder frontmatter
-    -> (List Block -> DataSource (Shared.Model -> List (Html msg)))
+    -> (List Block -> DataSource (Shared.Model -> List (Html Msg)))
     -> String
     -> DataSource value
 withFrontmatter constructor frontmatterDecoder2 renderer filePath =
