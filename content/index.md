@@ -14,7 +14,13 @@ Now no webpack required.
 ## Tailwind
 With matteus23/elm-tailwind-modules
 
-## Model in Rendelabel r
+## Model available in Renderer
+Needed this for keeping track of AB tests (see below)
+
+## Renderer can send Shared Messages
+Not only can renderer keep track of model, it can also send Shared messages.
+The button below outputs some text to the console via a Shared Msg and Debug.
+
 <button label="Click Me!"/>
 
 ## SLAT routes

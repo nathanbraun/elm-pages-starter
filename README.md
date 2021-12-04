@@ -5,11 +5,14 @@ This is my elm-pages v2, tailwind, SPLAT route, A/B testing starter page
 ## elm-pages 2.0
 Now no webpack required.
 
+## Model available in Renderer
+Needed this for keeping track of AB tests (see below)
+
+## Renderer can send Shared Messages
+Renderer can also also send Shared messages.
+
 ## Tailwind
 With matteus23/elm-tailwind-modules
-
-## Renderer has access to the Shared Model
-Needed this to keep track of which AB tests are showing.
 
 ## SPLAT routes
 Set up so that it matches anything (including nested pages) in content folder
